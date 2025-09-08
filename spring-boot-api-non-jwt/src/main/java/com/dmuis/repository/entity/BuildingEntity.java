@@ -1,4 +1,4 @@
-package com.dmuis.responsitory.entity;
+package com.dmuis.repository.entity;
 
 public class BuildingEntity {
 	private Long id;

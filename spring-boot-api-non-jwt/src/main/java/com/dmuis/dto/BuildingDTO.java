@@ -6,8 +6,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class BuildingDTO {
 	private String name;
-	@JsonProperty("district_id")
-	private Long districtId;
+	@JsonProperty("districtId")
+	private Long district_id;
 	private String ward;
 	private String street;
 	private Long numberOfBasement;
@@ -19,10 +19,10 @@ public class BuildingDTO {
 		this.typeCode = typeCode;
 	}
 	public Long getDistrictId() {
-		return districtId;
+		return district_id;
 	}
 	public void setDistrictId(Long districtId) {
-		this.districtId = districtId;
+		this.district_id = districtId;
 	}
 	public Long getNumberOfBasement() {
 		return numberOfBasement;

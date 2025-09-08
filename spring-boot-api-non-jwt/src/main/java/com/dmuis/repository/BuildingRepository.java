@@ -1,10 +1,10 @@
-package com.dmuis.service;
+package com.dmuis.repository;
 
 import java.util.List;
 
 import com.dmuis.dto.response.BuildingResponseDTO;
 import com.dmuis.repository.entity.BuildingEntity;
 
-public interface BuildingService {
-	List<BuildingResponseDTO> findAll(String name, Long districtId);
+public interface BuildingRepository {
+	List<BuildingEntity> findAll(String name, Long districtId);
 }

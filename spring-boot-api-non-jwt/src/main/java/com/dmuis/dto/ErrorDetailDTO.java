@@ -4,6 +4,7 @@ import java.util.List;
 
 public class ErrorDetailDTO {
 	private String error;
+	private List<String> detail;
 	public String getError() {
 		return error;
 	}
@@ -16,5 +17,5 @@ public class ErrorDetailDTO {
 	public void setDetail(List<String> detail) {
 		this.detail = detail;
 	}
-	private List<String> detail;
+	
 }
