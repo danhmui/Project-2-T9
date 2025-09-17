@@ -1,26 +1,16 @@
 package com.dmuis.repository.entity;
 
-import java.util.List;
-
 public class BuildingEntity {
 	private Long id;
 	private String name;
 	private String street;
 	private String ward;
-	private Long districtid;
-	private Long numberofbasement;
-	private Long floorarea;
-	private Long rentprice;
-	private Long rentpricedescription;
-	private String managername;
-	private String managerphonenumber;
-	private List<String> rentArea;
-	public List<String> getRentArea() {
-		return rentArea;
-	}
-	public void setRentArea(List<String> rentArea) {
-		this.rentArea = rentArea;
-	}
+	private Long districtId;
+	private Long numberOfBasement;
+	private Long floorArea;
+	private Long rentPrice;
+	private String managerName;
+	private String managerPhoneNumber;
 	public Long getId() {
 		return id;
 	}
@@ -45,47 +35,41 @@ public class BuildingEntity {
 	public void setWard(String ward) {
 		this.ward = ward;
 	}
-	public Long getNumberofbasement() {
-		return numberofbasement;
+	public Long getDistrictId() {
+		return districtId;
 	}
-	public void setNumberofbasement(Long numberofbasement) {
-		this.numberofbasement = numberofbasement;
+	public void setDistrictId(Long districtId) {
+		this.districtId = districtId;
 	}
-	public Long getFloorarea() {
-		return floorarea;
+	public Long getNumberOfBasement() {
+		return numberOfBasement;
 	}
-	public void setFloorarea(Long floorarea) {
-		this.floorarea = floorarea;
+	public void setNumberOfBasement(Long numberOfBasement) {
+		this.numberOfBasement = numberOfBasement;
 	}
-	public Long getRentprice() {
-		return rentprice;
+	public Long getFloorArea() {
+		return floorArea;
 	}
-	public void setRentprice(Long rentprice) {
-		this.rentprice = rentprice;
+	public void setFloorArea(Long floorArea) {
+		this.floorArea = floorArea;
 	}
-	public Long getRentpricedescription() {
-		return rentpricedescription;
+	public Long getRentPrice() {
+		return rentPrice;
 	}
-	public void setRentpricedescription(Long rentpricedescription) {
-		this.rentpricedescription = rentpricedescription;
+	public void setRentPrice(Long rentPrice) {
+		this.rentPrice = rentPrice;
 	}
-	public String getManagername() {
-		return managername;
+	public String getManagerName() {
+		return managerName;
 	}
-	public void setManagername(String managername) {
-		this.managername = managername;
+	public void setManagerName(String managerName) {
+		this.managerName = managerName;
 	}
-
-	public Long getDistrictid() {
-		return districtid;
+	public String getManagerPhoneNumber() {
+		return managerPhoneNumber;
 	}
-	public void setDistrictid(Long districtid) {
-		this.districtid = districtid;
+	public void setManagerPhoneNumber(String managerPhoneNumber) {
+		this.managerPhoneNumber = managerPhoneNumber;
 	}
-	public String getManagerphonenumber() {
-		return managerphonenumber;
-	}
-	public void setManagerphonenumber(String managerphonenumber) {
-		this.managerphonenumber = managerphonenumber;
-	}
+	
 }

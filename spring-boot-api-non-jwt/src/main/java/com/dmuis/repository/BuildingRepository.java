@@ -5,8 +5,6 @@ import java.util.Map;
 
 import com.dmuis.repository.entity.BuildingEntity;
 
-public interface BuildingRepository {
-	List<BuildingEntity> findAll(List<String> typeCode,
-								List<String> rentArea,
-								Map<String, Object> requestBuilding);
+public interface BuildingRepository{
+	List<BuildingEntity> findAll(List<String> typeCode, Map<String, Object> requestParams);
 }

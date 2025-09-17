@@ -11,36 +11,33 @@ import com.dmuis.dto.response.BuildingResponseDTO;
 import com.dmuis.repository.BuildingRepository;
 import com.dmuis.repository.RentAreaRepository;
 import com.dmuis.repository.entity.BuildingEntity;
-import com.dmuis.repository.impl.RentAreaRepositoryImpl;
 import com.dmuis.service.BuildingService;
-
-
 @Service
-public class BuildingServiceImpl implements BuildingService{
+public class BuildingServiceImpl implements BuildingService {
 	@Autowired
 	private BuildingRepository buildingRepository;
 	@Autowired
 	private RentAreaRepository rentAreaRepository;
 	@Override
-	public List<BuildingResponseDTO> findAll(List<String> typeCode,List<String> rentArea, Map<String, Object> requestBuilding) {
-		List<BuildingEntity> buildingEntities = buildingRepository.findAll(typeCode, rentArea, requestBuilding);
+	public List<BuildingResponseDTO> findAll(List<String> typeCode, Map<String, Object> requestParams) {
+		List<BuildingEntity> buildingEntities = buildingRepository.findAll(typeCode, requestParams);
 		List<BuildingResponseDTO> results = new ArrayList<BuildingResponseDTO>();
-		for(BuildingEntity it : buildingEntities) {
-			//Lay repo cua bang RentArea
-			List<Long> rentAreas = rentAreaRepository.findAll(it.getId());
+		for(BuildingEntity it : buildingEntities ) {
+			//Lay repo cua bang rentarea
+			List<Long> value = rentAreaRepository.findValue(it.getId());
 			BuildingResponseDTO buildingResponseDTO = new BuildingResponseDTO();
 			buildingResponseDTO.setId(it.getId());
-			buildingResponseDTO.setName(it.getName());
-			buildingResponseDTO.setAddress(it.getStreet() + ", " + it.getWard() + ", Quận " + it.getDistrictid()	);
-			buildingResponseDTO.setNumberOfBasement(it.getNumberofbasement());
-			buildingResponseDTO.setManagerName(it.getManagername());
-			buildingResponseDTO.setManagerPhone(it.getManagerphonenumber());
-			buildingResponseDTO.setFloorArea(it.getFloorarea());
+			buildingResponseDTO.setNameBuilding(it.getName());
+			buildingResponseDTO.setAddress(it.getStreet() + ", " + it.getWard() +", Quận "+ it.getDistrictId());
+			buildingResponseDTO.setNumberOfBasement(it.getNumberOfBasement());
+			buildingResponseDTO.setManagerName(it.getManagerName());
+			buildingResponseDTO.setManagerPhoneNumber(it.getManagerPhoneNumber());
+			buildingResponseDTO.setFloorArea(it.getFloorArea());
 			buildingResponseDTO.setEmptyArea(null);
-			buildingResponseDTO.setRentPrice(it.getRentprice());
-			buildingResponseDTO.setRentArea(rentAreas);
+			buildingResponseDTO.setRentArea(value);
+			buildingResponseDTO.setRentPrice(it.getRentPrice());
 			buildingResponseDTO.setServiceFee(null);
-			buildingResponseDTO.setBrokerageFee(null);
+			buildingResponseDTO.setBrokerFee(null);
 			results.add(buildingResponseDTO);
 		}
 		return results;

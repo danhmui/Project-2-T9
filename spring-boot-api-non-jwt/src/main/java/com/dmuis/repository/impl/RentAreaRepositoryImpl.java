@@ -3,7 +3,6 @@ package com.dmuis.repository.impl;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,21 +15,25 @@ public class RentAreaRepositoryImpl implements RentAreaRepository {
 	private String DB_URL = BuildingRepositoryImpl.DB_URL;
 	private String USER = BuildingRepositoryImpl.USER;
 	private String PASS = BuildingRepositoryImpl.PASS;
-	
-	public List<Long> findAll(Long buildingId) {
-		String sql = "SELECT value FROM RentArea WHERE buildingid = " + buildingId;
-		List<Long> results = new ArrayList<Long>();
-		try(Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
-				   Statement stm = conn.createStatement();
-				   ResultSet rs = stm.executeQuery(sql)){
-			   while(rs.next()) {
-				   results.add(rs.getLong("value"));
-			   }
-		      } catch (SQLException e) {
-		         e.printStackTrace();
-		          System.out.println("Connected database failed...");
-		      } 
-		return results;
+
+	@Override
+	public List<Long> findValue(Long buildingId) {
+		StringBuilder sql = new StringBuilder("SELECT value FROM rentarea");
+		sql.append(" WHERE 1=1 AND buildingId = ");
+		sql.append(buildingId);
+		List<Long> value = new ArrayList<>();
+		try(Connection conn = DriverManager.getConnection(DB_URL,USER,PASS);
+				Statement stm = conn.createStatement();
+				ResultSet rs = stm.executeQuery(sql.toString())) {
+			while(rs.next()) {
+				value.add(rs.getLong("value"));
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("Connected to databased failed...");
+		}
+		return value;
 	}
 	
 }
