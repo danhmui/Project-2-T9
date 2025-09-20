@@ -1,49 +1,85 @@
 package com.dmuis.repository.impl;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Repository;
 
 import com.dmuis.repository.BuildingRepository;
 import com.dmuis.repository.entity.BuildingEntity;
+import com.dmuis.utils.ConnectionUtil;
+import com.dmuis.utils.DataUtil;
+import com.dmuis.utils.NumberUtil;
 @Repository
 public class BuildingRepositoryImpl implements BuildingRepository {
-	static final String DB_URL = "jdbc:mysql://localhost:3306/estatebasic";
-	static final String USER = "root";
-	static final String PASS = "chandoi00";
+	private void sqlJoin(Map<String, Object> requestParams, StringBuilder join) {
+		String staffId = (String)requestParams.get("staffId");
+		if(DataUtil.checkData(staffId)) {
+			join.append("JOIN assignmentbuilding a ON a.buildingid = b.id ");
+		}
+		String rentAreaFrom = (String)requestParams.get("rentAreaFrom");
+		String rentAreaTo = (String)requestParams.get("rentAreaTo");
+		if(DataUtil.checkData(rentAreaTo) || DataUtil.checkData(rentAreaFrom)) {
+			join.append(" JOIN rentarea rt ON b.id = rt.buildingid");
+		}
+		String typeCode = (String)requestParams.get("typeCode");
+		if(DataUtil.checkData(typeCode)) {
+			join.append(" JOIN buildingrenttype bt ON b.id = bt.buildingid");
+			join.append(" JOIN renttype ON renttype.id = bt.renttypeid");
+		}
+	}
+	private void sqlWhere(Map<String, Object> requestParams, StringBuilder where) {
+		for(Map.Entry<String, Object> it : requestParams.entrySet()) {
+			String key = it.getKey();
+			if(!key.equals("staffId") && !key.equals("typeCode") && !key.startsWith("rentArea") && !key.startsWith("rentPrice")) {
+				String value = it.getValue().toString();
+				if(!NumberUtil.checkNumber(value)) 
+					where.append(" AND b." + key + " LIKE '%" + value + "%'");
+				else 
+					where.append(" AND b." + key + " = " + value);
+				
+			}
+		}
+	}
+	private void sqlWhereSpecial(Map<String, Object> requestParams,StringBuilder where, List<String> typeCode) {
+		String staffId = (String)requestParams.get("staffId");
+		if(DataUtil.checkData(staffId)) {
+			where.append(" AND a.staffid = " + staffId);
+		}
+		String rentAreaFrom = (String)requestParams.get("rentAreaFrom");
+		String rentAreaTo = (String)requestParams.get("rentAreaTo");
+		if(DataUtil.checkData(rentAreaFrom)) {
+			where.append(" AND rt.value >= " + rentAreaFrom);
+		}
+		if(DataUtil.checkData(rentAreaTo)) {
+			where.append(" AND rt.value <= " + rentAreaTo);
+		}
+		if(typeCode != null && typeCode.size() != 0) {
+			//Java 7
+//			List<String> code = new ArrayList<String>();
+//			for(String it : typeCode) {
+//				code.add("'" + it + "'");
+//			}
+//			where.append(" AND renttype.code IN (" + String.join(",", code) + ")");
+			where.append(" AND renttype.code IN (" + typeCode.stream().map(i -> "'" + i + "'").collect(Collectors.joining(",")) + ")");
+		}
+		
+	}
 	@Override
 	public List<BuildingEntity> findAll(List<String> typeCode, Map<String, Object> requestParams) {
 		StringBuilder sql = new StringBuilder("SELECT b.* FROM building b ");
-		if(requestParams.get("staffId") != null) 
-			sql.append("JOIN assignmentbuilding a ON a.buildingid = b.id ");
-		if(typeCode != null || !typeCode.isEmpty()) 
-			sql.append("JOIN buildingrenttype br ON b.id = br.buildingid JOIN renttype r ON br.renttypeid = r.id ");
-		sql.append(" WHERE 1=1 ");
-		if(requestParams.get("districtId") != null) 
-			sql.append("AND b.districtid = ").append(requestParams.get("districtId"));
-		if(requestParams.get("staffId") != null) 
-			sql.append(" AND a.staffId = ").append(requestParams.get("staffId"));
-		if(requestParams.get("rentPriceFrom") != null && requestParams.get("rentPriceTo") != null) {
-			sql.append(" AND b.rentprice >= ").append(requestParams.get("rentPriceFrom")).append(" AND b.rentprice <= ").append(requestParams.get("rentPriceTo"));
-		}
-		if(typeCode != null || !typeCode.isEmpty()) {
-			sql.append(" AND r.code IN ('");
-			for(int i = 0; i < typeCode.size(); i++) {
-				if(i > 0)
-					sql.append("','");
-				sql.append(typeCode.get(i));
-			}
-			sql.append("')");
-		}
+		sqlJoin(requestParams, sql);
+		sqlWhere(requestParams, sql);
+		sqlWhereSpecial(requestParams, sql, typeCode);
+		sql.append(" GROUP BY b.id");
 		List<BuildingEntity> results = new ArrayList<BuildingEntity>();
-		try(Connection conn = DriverManager.getConnection(DB_URL,USER,PASS);
+		try(Connection conn = ConnectionUtil.getConnection();
 				Statement stm = conn.createStatement();
 				ResultSet rs = stm.executeQuery(sql.toString())) {
 				while(rs.next()) {

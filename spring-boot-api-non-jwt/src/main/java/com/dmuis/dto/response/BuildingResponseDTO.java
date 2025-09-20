@@ -11,7 +11,7 @@ public class BuildingResponseDTO {
 	private String managerPhoneNumber;
 	private Long floorArea;
 	private Long emptyArea;
-	private List<Long> rentArea;
+	private String rentArea;
 	private Long rentPrice;
 	private Long serviceFee;
 	private Long brokerFee;
@@ -63,10 +63,10 @@ public class BuildingResponseDTO {
 	public void setEmptyArea(Long emptyArea) {
 		this.emptyArea = emptyArea;
 	}
-	public List<Long> getRentArea() {
+	public String getRentArea() {
 		return rentArea;
 	}
-	public void setRentArea(List<Long> rentArea) {
+	public void setRentArea(String rentArea) {
 		this.rentArea = rentArea;
 	}
 	public Long getRentPrice() {
