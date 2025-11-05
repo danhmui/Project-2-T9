@@ -1,0 +1,7 @@
+2025-09-23 22:01:23,648 [Worker-3: Loading available Gradle versions] INFO  o.e.b.c.i.u.g.PublishedGradleVersions - Gradle version information cache is not available. Remote download required.
+2025-09-24 08:57:37,189 [Worker-0: Loading available Gradle versions] INFO  o.e.b.c.i.u.g.PublishedGradleVersions - Gradle version information cache is up-to-date. Trying to read.
+2025-09-24 09:07:10,355 [Worker-0: Loading available Gradle versions] INFO  o.e.b.c.i.u.g.PublishedGradleVersions - Gradle version information cache is up-to-date. Trying to read.
+2025-09-24 09:09:06,277 [Worker-0: Loading available Gradle versions] INFO  o.e.b.c.i.u.g.PublishedGradleVersions - Gradle version information cache is up-to-date. Trying to read.
+2025-09-24 09:17:54,747 [Worker-35: https://ftp.jaist.ac.jp/pub/eclipse/releases/2025-09/202509101001/plugins/org.eclipse.oomph.setup.editor_1.32.0.v20250831-0649.jar] INFO  o.a.h.c.h.i.c.HttpRequestRetryExec - Recoverable I/O exception (java.net.SocketException) caught when processing request to {s}->[https://ftp.jaist.ac.jp:443]
+2025-09-24 09:17:54,746 [Worker-30: https://ftp.jaist.ac.jp/pub/eclipse/releases/2025-09/202509101001/plugins/org.jsoup_1.21.2.jar] INFO  o.a.h.c.h.i.c.HttpRequestRetryExec - Recoverable I/O exception (java.net.SocketException) caught when processing request to {s}->[https://ftp.jaist.ac.jp:443]
+2025-09-24 09:22:56,207 [Worker-2: Loading available Gradle versions] INFO  o.e.b.c.i.u.g.PublishedGradleVersions - Gradle version information cache is up-to-date. Trying to read.
