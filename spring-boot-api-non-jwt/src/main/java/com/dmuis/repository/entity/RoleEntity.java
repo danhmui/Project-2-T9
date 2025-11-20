@@ -1,38 +1,35 @@
 package com.dmuis.repository.entity;
 
-
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "district")
-public class DistrictEntity {
+@Table(name = "role")
+public class RoleEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	@Column(name = "code")
-	private String code;
 	@Column(name = "name")
 	private String name;
+	@Column(name = "code")
+	private String code;
 	
-	@OneToMany(mappedBy = "district", fetch = FetchType.LAZY)
-	private List<BuildingEntity> buildings = new ArrayList<>();
+	@ManyToMany(mappedBy = "roles")
+	private List<UserEntity> users = new ArrayList<UserEntity>();
 	
-	
-	public List<BuildingEntity> getBuildings() {
-		return buildings;
+	public List<UserEntity> getUsers() {
+		return users;
 	}
-	public void setBuildings(List<BuildingEntity> buildings) {
-		this.buildings = buildings;
+	public void setUsers(List<UserEntity> users) {
+		this.users = users;
 	}
 	public Long getId() {
 		return id;
@@ -40,16 +37,17 @@ public class DistrictEntity {
 	public void setId(Long id) {
 		this.id = id;
 	}
-	public String getCode() {
-		return code;
-	}
-	public void setCode(String code) {
-		this.code = code;
-	}
 	public String getName() {
 		return name;
 	}
 	public void setName(String name) {
 		this.name = name;
 	}
+	public String getCode() {
+		return code;
+	}
+	public void setCode(String code) {
+		this.code = code;
+	}
+	
 }

@@ -1,48 +1,67 @@
 package com.dmuis.dto;
 
-import java.util.List;
+import javax.validation.constraints.NotBlank;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class BuildingDTO {
+	@NotBlank(message = "id is required")
+	private Long id;
+	private String name;
+	@JsonProperty("district_id")
 	private Long districtId;
-	private Long staffId;
-	private List<Integer> rentArea;
-	private Long rentPriceFrom;
-	private Long rentPriceTo;
-	private List<String> typeCode; 	
+	private String ward;
+	private String street;
+	private Long numberOfBasement;
+	private String managerName;
+	private Long rentPrice;
+	public Long getRentPrice() {
+		return rentPrice;
+	}
+	public void setRentPrice(Long rentPrice) {
+		this.rentPrice = rentPrice;
+	}
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
 	public Long getDistrictId() {
 		return districtId;
 	}
 	public void setDistrictId(Long districtId) {
 		this.districtId = districtId;
 	}
-	public Long getStaffId() {
-		return staffId;
+	public String getWard() {
+		return ward;
 	}
-	public void setStaffId(Long staffId) {
-		this.staffId = staffId;
+	public void setWard(String ward) {
+		this.ward = ward;
 	}
-	public List<Integer> getRentArea() {
-		return rentArea;
+	public String getStreet() {
+		return street;
 	}
-	public void setRentArea(List<Integer> rentArea) {
-		this.rentArea = rentArea;
+	public void setStreet(String street) {
+		this.street = street;
 	}
-	public Long getRentPriceFrom() {
-		return rentPriceFrom;
+	public Long getNumberOfBasement() {
+		return numberOfBasement;
 	}
-	public void setRentPriceFrom(Long rentPriceFrom) {
-		this.rentPriceFrom = rentPriceFrom;
+	public void setNumberOfBasement(Long numberOfBasement) {
+		this.numberOfBasement = numberOfBasement;
 	}
-	public Long getRentPriceTo() {
-		return rentPriceTo;
+	public String getManagerName() {
+		return managerName;
 	}
-	public void setRentPriceTo(Long rentPriceTo) {
-		this.rentPriceTo = rentPriceTo;
+	public void setManagerName(String managerName) {
+		this.managerName = managerName;
 	}
-	public List<String> getTypeCode() {
-		return typeCode;
-	}
-	public void setTypeCode(List<String> typeCode) {
-		this.typeCode = typeCode;
-	}
+	
 }
