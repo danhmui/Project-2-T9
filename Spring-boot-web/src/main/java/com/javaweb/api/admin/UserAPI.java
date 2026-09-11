@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/user")
 public class UserAPI {
-
     @Autowired
     private IUserService userService;
 
@@ -32,8 +31,9 @@ public class UserAPI {
             userService.updatePassword(id, passwordDTO);
             return ResponseEntity.ok(SystemConstant.UPDATE_SUCCESS);
         } catch (MyException e) {
-            //LOGGER.error(e.getMessage());
-            return ResponseEntity.ok(e.getMessage());
+            return ResponseEntity.ok(SystemConstant.CHANGE_PASSWORD_FAIL);
+        } catch (Exception e) {
+            return ResponseEntity.ok(SystemConstant.ERROR_SYSTEM);
         }
     }
 

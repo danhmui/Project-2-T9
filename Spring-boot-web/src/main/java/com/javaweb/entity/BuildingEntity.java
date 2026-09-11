@@ -11,7 +11,11 @@ import java.util.List;
 @Table(name = "building")
 @Getter
 @Setter
-public class BuildingEntity extends BaseEntity {
+public class BuildingEntity {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
     @Column(name = "name")
     private String name;
 
@@ -24,30 +28,36 @@ public class BuildingEntity extends BaseEntity {
     @Column(name = "district")
     private String district;
 
-    @Column(name = "structure")
-    private String structure;
-
     @Column(name = "numberofbasement")
     private Integer numberOfBasement;
 
     @Column(name = "floorarea")
-    private Long floorArea;
-
-    @Column(name = "direction")
-    private String direction;
-
-    @Column(name = "level")
-    private String level;
+    private Double floorArea;
 
     @Column(name = "rentprice")
-    private Integer rentPrice;
+    private Double rentPrice;
+
+    @Column(name = "type")
+    private String type;
 
     @Column(name = "rentpricedescription")
-    private String rentPriceDescription;
+    private String rpDescription;
 
-    @OneToMany(mappedBy = "buildingEntity", fetch = FetchType.LAZY)
+    @Column(name = "managername")
+    private String managerName;
+
+    @Column(name = "managerphone")
+    private String managerPhone;
+
+    private String structure;
+    private String direction;
+    private String level;
+    private String image;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "buildingEntity", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, orphanRemoval = true)
     private List<RentAreaEntity> rentAreaEntities = new ArrayList<>();
 
-    @OneToMany(mappedBy = "buildingEntity", fetch = FetchType.LAZY)
-    private List<AssignmentBuildingEntity>  assignmentBuildingEntities = new ArrayList<>();
+    @OneToMany(mappedBy = "building", cascade = {CascadeType.MERGE, CascadeType.PERSIST}, orphanRemoval = true)
+    private List<AssignmentBuildingEntity> assignmentBuildingEntities = new ArrayList<>();
+
 }

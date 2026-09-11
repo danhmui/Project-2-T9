@@ -1,7 +1,8 @@
 package com.javaweb.utils;
 
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.TreeMap;
 
 
 public enum DistrictCode {
@@ -13,10 +14,11 @@ public enum DistrictCode {
     QUAN_6 ("Quận 6"),
     QUAN_7 ("Quận 7"),
     QUAN_8 ("Quận 8"),
-    ;
-
+    QUAN_THUDUC("Quận Thủ Đức"),
+    QUAN_BINHTHANH("Quận Bình Thạnh");
 
     private final String districtName;
+
     DistrictCode(String districtName) {
         this.districtName = districtName;
     }
@@ -25,11 +27,10 @@ public enum DistrictCode {
         return districtName;
     }
 
-
-    public static Map<String,String> type(){
-        Map<String,String> listType = new TreeMap<>();
+    public static Map<String,String> getDistrict(){
+        Map<String,String> listType = new LinkedHashMap<>();
         for(DistrictCode item : DistrictCode.values()){
-            listType.put(item.toString() , item.districtName);
+            listType.put(item.toString(), item.getDistrictName());
         }
         return listType;
     }

@@ -37,20 +37,21 @@ public class MapUtils {
 		}
 		return null;
 	}
+
     public static Map<String, Object> convertToMap(Object object){
-        Map<String, Object> map = new HashMap<String, Object>();
-        try{
+        Map<String, Object> map = new HashMap<>();
+        try {
             Field[] fields = object.getClass().getDeclaredFields();
             for (Field field : fields) {
                 field.setAccessible(true);
                 Object value = field.get(object);
-                if(value != null && !value.toString().equals("")) {
+                if(value != null && !value.toString().equals(""))
                     map.put(field.getName(), value);
-                }
             }
             return map;
-        } catch (IllegalAccessException e) {
+        }catch (IllegalAccessException e) {
             throw new RuntimeException(e);
         }
+
     }
 }

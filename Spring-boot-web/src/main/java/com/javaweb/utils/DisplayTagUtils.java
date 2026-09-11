@@ -13,7 +13,8 @@ public class DisplayTagUtils {
 
     public static void of(HttpServletRequest request, AbstractDTO dto) {
         if (dto != null) {
-            String sPage = request.getParameter(new ParamEncoder(dto.getTableId()).encodeParameterName(TableTagParameters.PARAMETER_PAGE));
+            String sPage = request.getParameter(new ParamEncoder(dto.getTableId())
+                    .encodeParameterName(TableTagParameters.PARAMETER_PAGE));
             Integer page = 1;
             if (StringUtils.isNotBlank(sPage)) {
                 try {

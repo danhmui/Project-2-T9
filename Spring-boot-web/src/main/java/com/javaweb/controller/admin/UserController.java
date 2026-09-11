@@ -20,7 +20,6 @@ import java.util.Map;
 
 @Controller(value = "usersControllerOfAdmin")
 public class UserController {
-
 	@Autowired
 	private IUserService userService;
 
@@ -29,15 +28,16 @@ public class UserController {
 
 	@Autowired
 	private MessageUtils messageUtil;
-
 	@RequestMapping(value = "/admin/user-list", method = RequestMethod.GET)
-	public ModelAndView getNews(@ModelAttribute(SystemConstant.MODEL) UserDTO model, HttpServletRequest request) {
+	public ModelAndView getNews(@ModelAttribute(SystemConstant.MODEL) UserDTO params, HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView("admin/user/list");
-		DisplayTagUtils.of(request, model);
-		List<UserDTO> news = userService.getUsers(model.getSearchValue(), PageRequest.of(model.getPage() - 1, model.getMaxPageItems()));
-		model.setListResult(news);
-		model.setTotalItems(userService.countTotalItems());
-		mav.addObject(SystemConstant.MODEL, model);
+        if(!SecurityUtils.getAuthorities().contains(SystemConstant.MANAGER_ROLE))
+            return new ModelAndView("redirect:/access-denied");
+		DisplayTagUtils.of(request, params);
+		List<UserDTO> results = userService.getUsers(params.getSearchValue(), PageRequest.of(params.getPage() - 1, params.getMaxPageItems()));
+		params.setListResult(results);
+		params.setTotalItems(userService.countTotalItems());
+		mav.addObject(SystemConstant.MODEL, params);
 		initMessageResponse(mav, request);
 		return mav;
 	}
@@ -64,6 +64,8 @@ public class UserController {
 	@RequestMapping(value = "/admin/user-edit-{id}", method = RequestMethod.GET)
 	public ModelAndView updateUser(@PathVariable("id") Long id, HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView("admin/user/edit");
+        if(!SecurityUtils.getAuthorities().contains(SystemConstant.MANAGER_ROLE))
+            return new ModelAndView("redirect:/access-denied");
 		UserDTO model = userService.findUserById(id);
 		model.setRoleDTOs(roleService.getRoles());
 		initMessageResponse(mav, request);

@@ -7,6 +7,7 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+
 @Entity
 @Table(name = "user")
 @Getter
@@ -25,7 +26,7 @@ public class UserEntity extends BaseEntity {
     private String password;
 
     @Column(name = "status", nullable = false)
-    private Integer status;
+    private Long status;
 
     @Column(name = "email", unique = true)
     private String email;
@@ -36,10 +37,6 @@ public class UserEntity extends BaseEntity {
             inverseJoinColumns = @JoinColumn(name = "role_id", nullable = false))
     private List<RoleEntity> roles = new ArrayList<>();
 
-    @OneToMany(mappedBy="userEntity", fetch = FetchType.LAZY)
-    private List<AssignmentBuildingEntity> assignmentBuildingEntities = new ArrayList<>();
-
-//    @OneToMany(mappedBy="users", fetch = FetchType.LAZY)
-//    private List<UserRoleEntity> userRoleEntities = new ArrayList<>();
-
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    private List<TransactionEntity> transactions = new ArrayList<>();
 }

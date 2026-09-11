@@ -11,12 +11,12 @@ import java.util.List;
 public class BuildingSearchRequest extends AbstractDTO {
     private String name;
     private Long floorArea;
-    private String districtCode;
+    private String district;
     private String ward;
     private String street;
-    private Long numberOfBasement;
+    private Integer numberOfBasement;
     private String direction;
-    private Long level;
+    private String level;
     private Long areaFrom;
     private Long areaTo;
     private Long rentPriceFrom;

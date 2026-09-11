@@ -22,7 +22,7 @@ public class HomeController {
 	public ModelAndView homePage(BuildingSearchRequest buildingSearchRequest, HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView("web/home");
         mav.addObject("modelSearch", buildingSearchRequest);
-        mav.addObject("districts", DistrictCode.type());
+        mav.addObject("districts", DistrictCode.getDistrict());
 		return mav;
 	}
 
@@ -53,8 +53,15 @@ public class HomeController {
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public ModelAndView login() {
 		ModelAndView mav = new ModelAndView("login");
+        System.out.println(mav);
 		return mav;
 	}
+
+    @RequestMapping(value = "/register", method = RequestMethod.GET)
+    public ModelAndView register() {
+        ModelAndView mav = new ModelAndView("register");
+        return mav;
+    }
 
 	@RequestMapping(value = "/access-denied", method = RequestMethod.GET)
 	public ModelAndView accessDenied() {
